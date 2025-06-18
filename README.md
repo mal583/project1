@@ -4,12 +4,12 @@
 **Risk Evaluation:** Providing Confidence intervals and probability distributions for model accuracy. 
 
 **Import Libraries:** 
-'''import numpy as np
+```import numpy as np
 import pandas as pd
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score
 from sklearn.model_selection import train_test_split
-import matplotlib.pyplot as plt''' 
+import matplotlib.pyplot as plt```
 **Define hyperparameter space:** 
 '''n_simulations = 100
 param_dist = {
