@@ -22,8 +22,6 @@ param_dist = {
 for i in range(n_simulations):
     # Random train-test split (different each iteration)[1]
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3)
-    
-    # Train model with random hyperparameters
     model = RandomForestClassifier(
         n_estimators=param_dist['n_estimators'][i],
         max_depth=param_dist['max_depth'][i],
@@ -35,7 +33,6 @@ for i in range(n_simulations):
 '''mean_acc = np.mean(results)
 std_acc = np.std(results)
 conf_95 = np.percentile(results, [2.5, 97.5])
-
 print(f"Mean Accuracy: {mean_acc:.3f} ± {std_acc:.3f}")
 print(f"95% Confidence Interval: {conf_95}")''' 
 **Plotting Distribution:** 
