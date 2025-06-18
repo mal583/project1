@@ -9,7 +9,7 @@ import matplotlib.pyplot as plt
 url = 'https://archive.ics.uci.edu/ml/machine-learning-databases/magic/magic04.data'
 data = pd.read_csv(url, header=None)
 X = data.iloc[:, :-1].values
-y = data.iloc[:, -1].map({'g': 0, 'h': 1}).values  # Convert labels to binary
+Y = data.iloc[:, -1].map({'g': 0, 'h': 1}).values  # Convert labels to binary
 
 # Define hyperparameter search space (Monte Carlo sampling)
 n = 100
@@ -23,7 +23,7 @@ param_dist = {
 results = []
 for i in range(n):
     # Random train-test split (different each iteration)[1]
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
+    X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.2)
     
     # Train model with random hyperparameters
     model = RandomForestClassifier(
@@ -32,25 +32,25 @@ for i in range(n):
         min_samples_split=param_dist['min_samples_split'][i],
         random_state=40
     )
-    model.fit(X_train, y_train)
+    model.fit(X_train, Y_train)
     
     # Evaluate
-    y_pred = model.predict(X_test)
-    acc = accuracy_score(y_test, y_pred)
+    Y_pred = model.predict(X_test)
+    acc = accuracy_score(Y_test, Y_pred)
     results.append(acc)
 
 # Analyze results
 mean_acc = np.mean(results)
 std_acc = np.std(results)
-conf_95 = np.percentile(results, [2.5, 97.5])
+conf_96 = np.percentile(results, [2.0, 98.0])
 
 print(f"Mean Accuracy: {mean_acc:.3f} ± {std_acc:.3f}")
-print(f"95% Confidence Interval: {conf_95}")
+print(f"95% Confidence Interval: {conf_96}")
 
 # Plot accuracy distribution
 plt.figure(figsize=(12,5))
 plt.hist(results, bins=15, edgecolor='k', alpha=0.7, color='green')
-plt.axvline(mean_acc, color='red', linestyle='--', label='Mean Accuracy')
+plt.axvline(mean_acc, color='skyblue', linestyle='--', label='Mean Accuracy')
 plt.xlabel('Accuracy')
 plt.ylabel('Range')
 plt.title('Monte Carlo Simulation')
@@ -60,7 +60,7 @@ plt.show()
 # Find best hyperparameters
 best_idx = np.argmax(results)
 best_params = {k: v[best_idx] for k, v in param_dist.items()}
-print("\nBest Hyperparameters:", best_params)
+print("\nGood Hyperparameters:", best_params)
 
     
 
